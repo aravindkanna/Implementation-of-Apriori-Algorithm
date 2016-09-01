@@ -54,12 +54,14 @@ def itemSetsCount(inFile, currList):
 		line = line.strip()
 		itemList = line.split(",")
 		currTransaction = Set(itemList)
+		currSize = len(currTransaction)
 		for i in range(size):
-			a = currList[i][:];
+			a = currList[i][:]
+			sz = len(a)
+			if currSize < sz:
+				continue 
 			itemSet = Set(a)
 			if currTransaction.issuperset(itemSet):
-				#print currTransaction
-				#print itemSet
 				counts[i] += 1
 	return counts
 

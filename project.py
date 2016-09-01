@@ -5,8 +5,11 @@ import sys
 import itertools
 import sets
 import fileinput
+import time
 
 #getting data from config
+start = time.time()
+
 conf = open('config.csv')
 params = {}
 for line in conf:
@@ -48,10 +51,11 @@ for i in singletons:
 		freqSingles.append(a)
 		freqSinglesCount.append(singletons[i])
 
+freqSingles.sort()
+
 FreqsTrie = trieNode()
 FreqsTrie.insertAll(freqSingles, freqSinglesCount)
 
-freqSingles.sort()
 FreqItemSets = freqSingles;
 currSizeList = freqSingles;
 
@@ -85,6 +89,7 @@ if flag == 1:
 	print "RulesCount"
 	noOfRules = printAssociateRules(FreqsTrie, mincon)
 
+#print time.time() - start
 sys.stdout.close()
 
 for line in fileinput.input(outFile,inplace=1):
@@ -93,3 +98,5 @@ for line in fileinput.input(outFile,inplace=1):
     elif "FreqCount" in line:
     	line=line.replace(line,str(allfreqs) + "\n")
     print line,
+
+

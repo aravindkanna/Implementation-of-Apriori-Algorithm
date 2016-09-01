@@ -1,5 +1,5 @@
 input,/home/aravindkanna/Documents/Sem-7/DWDM/Assignment-1/Implementation-of-Apriori-Algorithm/input.csv
 output,/home/aravindkanna/Documents/Sem-7/DWDM/Assignment-1/Implementation-of-Apriori-Algorithm/output.csv
-support,0.3
-confidence,0.5
-flag,0
+support,0.01
+confidence,0.01
+flag,1
