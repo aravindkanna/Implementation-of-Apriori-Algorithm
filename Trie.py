@@ -48,7 +48,6 @@ class trieNode:
 		self.name = name
 
 	def insertNode(self, itemset, count):
-		print itemset
 		f = self.child
 		for i in itemset:
 			if i in f:
@@ -74,11 +73,20 @@ class trieNode:
 
 	def printAll(self, prevStr):
 		for i in self.child:
-			print i
 			a = prevStr + i
-			if a is not None:
-				print a
+			print a
 			self.child[i].printAll(a + ",")
 
+	def getItemSets(self, prevList):
+		for i in self.child:
+			a = prevList+[i]
+			yield a
+			for j in self.child[i].getItemSets(a):
+				yield j
 
-
+	def getCount(self, itemSet):
+		f = self.child
+		for i in itemSet:
+			fp = f[i]
+			f = f[i].child
+		return fp.count

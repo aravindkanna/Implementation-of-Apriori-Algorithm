@@ -1,4 +1,6 @@
 from sets import Set
+import itertools
+
 
 def generate(currentSizeList):
 	size = len(currentSizeList)
@@ -61,5 +63,12 @@ def itemSetsCount(inFile, currList):
 				counts[i] += 1
 	return counts
 
-
-
+def printAssociateRules(FreqsTrie, mincon):
+	count = 0
+	for i in FreqsTrie.getItemSets([]):
+		for j in range(1, len(i)):
+			for k in itertools.combinations(i, j):
+				if float(FreqsTrie.getCount(i)) / float(FreqsTrie.getCount(k)) >= mincon:
+					print (',').join(k) + "=>" + (',').join(set(i) - set(k))
+					count += 1
+	return count
