@@ -20,7 +20,7 @@ flag = int(params["flag"])
 minsup = float(params["support"])
 mincon = float(params["confidence"])
 
-sys.stdout = open("output.csv", 'w')
+sys.stdout = open(outFile, 'w')
 
 singletons = {}
 noOfTransactions = 0;
@@ -35,7 +35,6 @@ for a in infp:
 			singletons[i] = 1
 	noOfTransactions += 1
 	
-#print singletons
 freqSingles = []
 freqSinglesCount = []
 
@@ -49,12 +48,8 @@ for i in singletons:
 		freqSingles.append(a)
 		freqSinglesCount.append(singletons[i])
 
-#print freqSingles
-#print freqSinglesCount
 FreqsTrie = trieNode()
-
 FreqsTrie.insertAll(freqSingles, freqSinglesCount)
-#print FreqsTrie.child
 
 freqSingles.sort()
 FreqItemSets = freqSingles;
@@ -69,46 +64,32 @@ while True:
 		break
 
 	counts = itemSetsCount(inFile, prunedList)
-#	print counts
 	FreqItems = []
 	FreqCounts = []
 
 	size = len(prunedList)
 	for i in range(size):
 		if counts[i] >= minTransactions:
-#			print "Aravind"
-			print (",").join(prunedList[i])q
+			print (",").join(prunedList[i])
 			FreqItems.append(prunedList[i])
 			FreqCounts.append(counts[i])
 
 	if len(FreqCounts) == 0:
-#		print "Hey"
 		break
 
 	FreqsTrie.insertAll(FreqItems, FreqCounts)
 	currSizeList = FreqItems
 	allfreqs += len(currSizeList)
 
-#print allfreqs
-#FreqsTrie.printAll("")
-print "RulesCount"
-noOfRules = printAssociateRules(FreqsTrie, mincon)
+if flag == 1:
+	print "RulesCount"
+	noOfRules = printAssociateRules(FreqsTrie, mincon)
+
 sys.stdout.close()
 
-for line in fileinput.input("output.csv",inplace=1):
-    if "RulesCount" in line:
+for line in fileinput.input(outFile,inplace=1):
+    if "RulesCount" in line and flag == 1:
         line=line.replace(line,str(noOfRules) + "\n")
     elif "FreqCount" in line:
     	line=line.replace(line,str(allfreqs) + "\n")
     print line,
-
-"""
-for i in FreqsTrie.getItemSets([]):
-	for j in range(1, len(i)):
-		for k in itertools.combinations(i, j):
-			if float(FreqsTrie.getCount(i)) / float(FreqsTrie.getCount(k)) >= mincon:
-				print (',').join(k) + "=>" + (',').join(set(i) - set(k))
-
-
-
-"""
