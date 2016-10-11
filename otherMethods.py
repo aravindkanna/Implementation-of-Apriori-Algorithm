@@ -6,7 +6,7 @@ def generate(currentSizeList):
 	size = len(currentSizeList)
 	i = 0
 	j = 1
-
+	print len(currentSizeList)
 	nextSizeList = []
 	while i < size:
 		j = i + 1
@@ -20,7 +20,7 @@ def generate(currentSizeList):
 			else :
 				break
 		i += 1
-
+	print len(nextSizeList)
 	return nextSizeList
 
 def oneLessSubsets(itemset):
